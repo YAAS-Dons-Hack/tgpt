@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yzhou216/tgpt#readme",
   "dependencies": {
+    "openai": "^3.2.1",
     "typescript": "^5.0.2"
   },
   "devDependencies": {
