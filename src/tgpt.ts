@@ -30,7 +30,8 @@ function gpt(cmd: string, sz: number): void
 
 	const runPrompt = async () => {
 		const prompt = `
-		How to use `+ cmd + `? Answer it in ` + String(sz) + ` words.
+		How to use `+ cmd + ` command?
+		Answer it in ` + String(sz) + ` words.
 		Return response in the following parsable JSON format:
 		{
 			"Q": "question",
