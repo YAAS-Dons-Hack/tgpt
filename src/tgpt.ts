@@ -20,10 +20,39 @@ function get_key(): string
 	return key;
 }
 
-function gpt(cmd: string, sz: number): string
+function gpt(cmd: string, sz: number): void
 {
-	/* to be implemented */
-	return "foobar";
+	const { Configuration, OpenAIApi } = require("openai");
+	const config = new Configuration({
+		apiKey: get_key(),
+	});
+	const openai = new OpenAIApi(config);
+
+	const runPrompt = async () => {
+		const prompt = `
+		How to use `+ cmd + `? Answer it in ` + String(sz) + ` words.
+		Return response in the following parsable JSON format:
+		{
+			"Q": "question",
+			"A": "answer"
+		}
+		`;
+
+		const response = await openai.createCompletion({
+			model: "text-davinci-003",
+			prompt: prompt,
+			max_tokens: 500,
+			temperature: 1,
+		});
+
+		const parsableJSONresponse = response.data.choices[0].text;
+		const parsedResponse = JSON.parse(parsableJSONresponse);
+
+		//console.log("Question: ", parsedResponse.Q);
+		console.log(parsedResponse.A);
+	};
+
+	runPrompt();
 }
 
 function check_cmd(cmd: string, callback: (exit_status: number) => void): void
@@ -102,6 +131,7 @@ function main(): number
 		});
 	}
 
+	gpt(cmd, sz);
 	return 0;
 }
 
