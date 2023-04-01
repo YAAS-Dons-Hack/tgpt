@@ -75,6 +75,11 @@ function main(): number
 			sz = LONG_WORD_LIMIT;
 		} else if (argv[i] == "-s") {
 			sz = Number(argv[i + 1]);
+			if (isNaN(sz)) {
+				console.log("error: illegal size value");
+				process.exit(-1);
+			}
+
 			if (sz < 0) {
 				console.log("error: size can't be less than 0");
 				process.exit(-1);
