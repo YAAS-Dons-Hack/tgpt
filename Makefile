@@ -3,7 +3,7 @@ JS_PROG = tgpt.js
 JS_DIR = dist
 
 compile:
-	tsc
+	npx tsc
 
 run:
 	node $(JS_DIR)/$(JS_PROG) $(ARG)
