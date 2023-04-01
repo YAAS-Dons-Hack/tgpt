@@ -5,7 +5,7 @@
 
 import { exec } from 'child_process';
 
-const USAGE: string = "Usage: tgpt [command]"
+const USAGE: string = "Usage: tgpt [command]";
 const DEFAULT_WORD_LIMIT: number = 150;
 const LONG_WORD_LIMIT: number = 500;
 
@@ -84,6 +84,7 @@ function main(): number
 				console.log("error: size can't be less than 0");
 				process.exit(-1);
 			}
+
 			i++;
 		} else {
 			console.log("tgpt: invalid option %s", argv[i]);
