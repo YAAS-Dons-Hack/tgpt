@@ -24,8 +24,13 @@ $ exec bash
 Then, you can execute by running:
 
 ```shell
-$ tgpt [command]
+$ tgpt [command] [options]
 ```
+
+Options:
+`-f`            force to run the command without checking
+`-l`            set output size to 500 words (default: 150)
+`-s [size]`     manually set output size
 
 # Contribute
 

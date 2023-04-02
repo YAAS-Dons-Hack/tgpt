@@ -5,7 +5,12 @@
 
 import { exec } from 'child_process';
 
-const USAGE: string = "Usage: tgpt [command]";
+const USAGE: string = "Usage: tgpt [command]\n\n" +
+		      "Options:\n" +
+		      "-f	   force to run the command without checking\n" +
+		      "-l	   set output size to 500 words (default: 150)\n" +
+		      "-s [size]  " +
+				  "manually set output size";
 const DEFAULT_WORD_LIMIT: number = 150;
 const LONG_WORD_LIMIT: number = 500;
 const LINE_LIMIT = 80;
