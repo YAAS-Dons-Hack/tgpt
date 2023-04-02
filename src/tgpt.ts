@@ -24,8 +24,8 @@ function get_key(): string
 function box_text(inputString: string): string
 {
 	const words: string[] = inputString.split(" ");
-	let curr_line = "";
-	let boxed_str = "";
+	let curr_line: string = "";
+	let boxed_str: string = "";
 
 	for (let i = 0; i < words.length; i++) {
 		const curr_word = words[i];
@@ -41,8 +41,8 @@ function box_text(inputString: string): string
 	if (curr_line)
 		boxed_str += `| ${curr_line.trim().padEnd(LINE_LIMIT)}|\n`;
 
-	const top_line = "+".padEnd(LINE_LIMIT + 2, "-") + "+\n";
-	const bot_line = "+".padEnd(LINE_LIMIT + 2, "-") + "+";
+	const top_line: string = "+".padEnd(LINE_LIMIT + 2, "-") + "+\n";
+	const bot_line: string = "+".padEnd(LINE_LIMIT + 2, "-") + "+";
 
 	return `${top_line}${boxed_str}${bot_line}`;
 }
