@@ -5,7 +5,7 @@
 
 import { exec } from 'child_process';
 
-const USAGE: string = "Usage: tgpt [command]\n\n" +
+const USAGE: string = "Usage: tgpt [command] [options]\n\n" +
 		      "Options:\n" +
 		      "-f	   force to run the command without checking\n" +
 		      "-l	   set output size to 500 words (default: 150)\n" +
