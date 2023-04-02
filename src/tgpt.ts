@@ -20,6 +20,34 @@ function get_key(): string
 	return key;
 }
 
+function putWordsInBox(inputString: string): string
+{
+	const MAX_LINE_LENGTH = 80;
+	const wordsArray = inputString.split(" ");
+	let currentLine = "";
+	let boxedString = "";
+
+	for (let i = 0; i < wordsArray.length; i++) {
+		const currentWord = wordsArray[i];
+
+		if (currentLine.length + currentWord.length + 1 <= MAX_LINE_LENGTH) {
+			currentLine += currentWord + " ";
+		} else {
+			boxedString += `| ${currentLine.trim().padEnd(MAX_LINE_LENGTH)}|\n`;
+			currentLine = `${currentWord} `;
+		}
+	}
+
+	if (currentLine) {
+		boxedString += `| ${currentLine.trim().padEnd(MAX_LINE_LENGTH)}|\n`;
+	}
+
+	const boxTop = "+".padEnd(MAX_LINE_LENGTH + 2, "-") + "+\n";
+	const boxBottom = "+".padEnd(MAX_LINE_LENGTH + 2, "-") + "+";
+
+	return `${boxTop}${boxedString}${boxBottom}`;
+}
+
 function gpt(cmd: string, sz: number): void
 {
 	const { Configuration, OpenAIApi } = require("openai");
@@ -30,8 +58,8 @@ function gpt(cmd: string, sz: number): void
 
 	const runPrompt = async () => {
 		const prompt = `
-		How to use `+ cmd + ` command?
-		Answer it in ` + String(sz) + ` words.
+		Write a brief description that describes manual's `+ cmd + ` command.
+		Strictly limit yourself to only ` + String(sz) + ` words.
 		Return response in the following parsable JSON format:
 		{
 			"Q": "question",
@@ -49,8 +77,7 @@ function gpt(cmd: string, sz: number): void
 		const parsableJSONresponse = response.data.choices[0].text;
 		const parsedResponse = JSON.parse(parsableJSONresponse);
 
-		//console.log("Question: ", parsedResponse.Q);
-		console.log(parsedResponse.A);
+		console.log(putWordsInBox(String(parsedResponse.A)));
 	};
 
 	runPrompt();
