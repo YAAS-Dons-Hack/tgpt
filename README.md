@@ -27,10 +27,10 @@ Then, you can execute by running:
 $ tgpt [command] [options]
 ```
 
-Options:
-`-f`            force to run the command without checking
-`-l`            set output size to 500 words (default: 150)
-`-s [size]`     manually set output size
+Options: \
+`-f`:           force to run the command without checking \
+`-l`:           set output size to 500 words (default: 150) \
+`-s [size]`:    manually set output size
 
 # Contribute
 
