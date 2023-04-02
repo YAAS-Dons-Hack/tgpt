@@ -71,6 +71,6 @@ included in the [LICENSE](LICENSE) file.
     * Andrew Diep <adiep@dons.usfca.edu>
     * Alexander Leon <aleon7@dons.usfca.edu>
     * Su Nam <snam3@dons.usfca.edu>
-    * Yiyu Zhou <yiyuzhou155@dons.usfca.edu>
+    * Yiyu Zhou <yzhou155@dons.usfca.edu>
 
 Please see the Git history for individual authorship information.
