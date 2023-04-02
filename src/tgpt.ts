@@ -8,6 +8,7 @@ import { exec } from 'child_process';
 const USAGE: string = "Usage: tgpt [command]";
 const DEFAULT_WORD_LIMIT: number = 150;
 const LONG_WORD_LIMIT: number = 500;
+const LINE_LIMIT = 80;
 
 function get_key(): string
 {
@@ -20,32 +21,30 @@ function get_key(): string
 	return key;
 }
 
-function putWordsInBox(inputString: string): string
+function box_text(inputString: string): string
 {
-	const MAX_LINE_LENGTH = 80;
-	const wordsArray = inputString.split(" ");
-	let currentLine = "";
-	let boxedString = "";
+	const words: string[] = inputString.split(" ");
+	let curr_line = "";
+	let boxed_str = "";
 
-	for (let i = 0; i < wordsArray.length; i++) {
-		const currentWord = wordsArray[i];
+	for (let i = 0; i < words.length; i++) {
+		const curr_word = words[i];
 
-		if (currentLine.length + currentWord.length + 1 <= MAX_LINE_LENGTH) {
-			currentLine += currentWord + " ";
+		if (curr_line.length + curr_word.length + 1 <= LINE_LIMIT) {
+			curr_line += curr_word + " ";
 		} else {
-			boxedString += `| ${currentLine.trim().padEnd(MAX_LINE_LENGTH)}|\n`;
-			currentLine = `${currentWord} `;
+			boxed_str += `| ${curr_line.trim().padEnd(LINE_LIMIT)}|\n`;
+			curr_line = `${curr_word} `;
 		}
 	}
 
-	if (currentLine) {
-		boxedString += `| ${currentLine.trim().padEnd(MAX_LINE_LENGTH)}|\n`;
-	}
+	if (curr_line)
+		boxed_str += `| ${curr_line.trim().padEnd(LINE_LIMIT)}|\n`;
 
-	const boxTop = "+".padEnd(MAX_LINE_LENGTH + 2, "-") + "+\n";
-	const boxBottom = "+".padEnd(MAX_LINE_LENGTH + 2, "-") + "+";
+	const top_line = "+".padEnd(LINE_LIMIT + 2, "-") + "+\n";
+	const bot_line = "+".padEnd(LINE_LIMIT + 2, "-") + "+";
 
-	return `${boxTop}${boxedString}${boxBottom}`;
+	return `${top_line}${boxed_str}${bot_line}`;
 }
 
 function gpt(cmd: string, sz: number): void
@@ -56,7 +55,7 @@ function gpt(cmd: string, sz: number): void
 	});
 	const openai = new OpenAIApi(config);
 
-	const runPrompt = async () => {
+	const run_prompt = async () => {
 		const prompt = `
 		Write a brief description that describes manual's `+ cmd + ` command.
 		Strictly limit yourself to only ` + String(sz) + ` words.
@@ -74,13 +73,13 @@ function gpt(cmd: string, sz: number): void
 			temperature: 1,
 		});
 
-		const parsableJSONresponse = response.data.choices[0].text;
-		const parsedResponse = JSON.parse(parsableJSONresponse);
+		const parsable_JSON_response = response.data.choices[0].text;
+		const parsed_response = JSON.parse(parsable_JSON_response);
 
-		console.log(putWordsInBox(String(parsedResponse.A)));
+		console.log(box_text(String(parsed_response.A)));
 	};
 
-	runPrompt();
+	run_prompt();
 }
 
 function check_cmd(cmd: string, callback: (exit_status: number) => void): void
